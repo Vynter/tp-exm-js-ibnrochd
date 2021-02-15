@@ -119,8 +119,8 @@ function TabMulti(min = 0, max = 12) {
   let btn = document.querySelector("#resultat");
   console.log(btn);
 
-  btn.addEventListener("click", function (e) {
-    //e.preventDefault();
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
     let minV = document.querySelector("#min").value;
     let maxV = document.querySelector("#max").value;
     //console.log(Number.isInteger(minV) + " " + Number.isInteger(maxV));
@@ -182,6 +182,39 @@ function pgcdCreate() {
   form.appendChild(l3);
   form.appendChild(bt);
   body.appendChild(form);
+  /*  function gcd(a, b) {
+    if (a > b) {
+      return gcd(b, a);
+    } else {
+      if (b % a == 0) {
+        return a;
+      } else {
+        return gcd(a, b - a);
+      }
+    }
+  }*/
+
+  let res = document.querySelector("#res");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let val1 = document.querySelector("#a").value;
+    let val2 = document.querySelector("#b").value;
+    console.log(parseInt(val1) + " " + val2);
+    let resultat = gcd(parseInt(val1), parseInt(val2));
+    res.value = resultat;
+  });
 }
 
+function gcd(a, b) {
+  if (a > b) {
+    return gcd(b, a);
+  } else {
+    if (b % a == 0) {
+      return a;
+    } else {
+      return gcd(a, b - a);
+    }
+  }
+}
 pgcdCreate();
