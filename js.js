@@ -2,22 +2,16 @@ var img = document.querySelector("img");
 var title = document.querySelector("h2");
 var imgTab = img.style.width.split("");
 var imgWith = parseInt(imgTab.slice(0, imgTab.length - 2).join(""));
-//console.log(imgWith * 3);
 var w = img.width;
 var h = img.height;
-console.log(w * 3);
 var body = document.querySelector("body");
 
 img.addEventListener("mouseenter", function () {
-  /*this.style.width = imgWith * 3 + "px";
-  console.log(this.style.width);*/
   this.width = w * 3;
   this.height = h * 3;
-  console.log(this.width);
 });
 
 img.addEventListener("mouseleave", function () {
-  //this.style.width = imgWith + "px";
   this.width = w;
   this.height = h;
 });
@@ -30,18 +24,13 @@ img.addEventListener("dblclick", function () {
   }
 });
 
-/*-----------------------exo 2----------------------- */
-function TabMulti(min = 0, max = 12) {
-  //var br = document.querySelector("br");
+/*-----------------------parte 2----------------------- */
+function TabMulti(min = 1, max = 12) {
   var tab = document.createElement("table");
   var cl = document.createElement("caption");
   cl.innerText = "Table de multuplication dynamique";
   tab.appendChild(cl);
   body.append(tab);
-
-  /*var max = 12;
-  var min = 0;*/
-
   var tagHTr = document.createElement("tr");
 
   for (let i = min; i <= max; i++) {
@@ -90,8 +79,9 @@ function TabMulti(min = 0, max = 12) {
     }
   }
 
-  /* Création de la partie controle Tableau de multiplication*/
   let form = document.createElement("form");
+  let br = document.createElement("br");
+  form.appendChild(br);
   let l1 = document.createElement("label");
   l1.setAttribute("for", "min");
   l1.innerText = "Min";
@@ -116,40 +106,38 @@ function TabMulti(min = 0, max = 12) {
   form.appendChild(bt);
   body.appendChild(form);
 
-  let btn = document.querySelector("#resultat");
-  console.log(btn);
-
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let minV = document.querySelector("#min").value;
     let maxV = document.querySelector("#max").value;
-    //console.log(Number.isInteger(minV) + " " + Number.isInteger(maxV));
-    if (minV !== "" && minV !== "") {
-      console.log("ils sont pas vide");
-      if (isNaN(minV) === false && isNaN(maxV) === false) {
-        console.log("c'est des numérpo");
-        if (parseInt(minV) < parseInt(maxV)) {
-          console.log("arriver");
-          let minA = parseInt(minV);
-          let maxA = parseInt(maxV);
-          tab.parentNode.removeChild(tab);
-          form.parentNode.removeChild(form);
-          body.removeChild(document.querySelector("#form2"));
-          TabMulti(minA, maxA);
-          pgcdCreate();
-        }
-      }
+    if (
+      minV !== "" &&
+      minV !== "" &&
+      isNaN(minV) === false &&
+      isNaN(maxV) === false &&
+      minV > 0 &&
+      maxV > 0 &&
+      parseInt(minV) < parseInt(maxV)
+    ) {
+      let minA = parseInt(minV);
+      let maxA = parseInt(maxV);
+      tab.parentNode.removeChild(tab);
+      form.parentNode.removeChild(form);
+      body.removeChild(document.querySelector("#form2"));
+      TabMulti(minA, maxA);
+      pgcdCreate();
     } else {
       alert("veuillez saisir la valeur de MIN ainsi que la valeur de Max");
     }
-    console.log(min + " " + max);
-    //console.log(isNaN(minV) + " " + isNaN(maxV));
   });
 }
 TabMulti();
 
+/*-----------------------parte 3----------------------- */
 function pgcdCreate() {
   let form = document.createElement("form");
+  let br = document.createElement("br");
+  form.appendChild(br);
   form.setAttribute("id", "form2");
   let l1 = document.createElement("label");
   l1.setAttribute("for", "a");
@@ -182,27 +170,25 @@ function pgcdCreate() {
   form.appendChild(l3);
   form.appendChild(bt);
   body.appendChild(form);
-  /*  function gcd(a, b) {
-    if (a > b) {
-      return gcd(b, a);
-    } else {
-      if (b % a == 0) {
-        return a;
-      } else {
-        return gcd(a, b - a);
-      }
-    }
-  }*/
-
-  let res = document.querySelector("#res");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let val1 = document.querySelector("#a").value;
     let val2 = document.querySelector("#b").value;
-    console.log(parseInt(val1) + " " + val2);
-    let resultat = gcd(parseInt(val1), parseInt(val2));
-    res.value = resultat;
+    if (
+      val1 !== "" &&
+      val2 !== "" &&
+      isNaN(val1) === false &&
+      isNaN(val2) === false &&
+      val1 > 0 &&
+      val2 > 0
+    ) {
+      let res = document.querySelector("#res");
+      let resultat = gcd(parseInt(val1), parseInt(val2));
+      res.value = resultat;
+    } else {
+      alert("veuillez saisir la valeur de MIN ainsi que la valeur de Max");
+    }
   });
 }
 
