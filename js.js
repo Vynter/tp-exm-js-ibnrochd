@@ -1,3 +1,4 @@
+/*-----------------------parte 1----------------------- */
 var img = document.querySelector("img");
 var title = document.querySelector("h2");
 var imgTab = img.style.width.split("");
@@ -18,9 +19,11 @@ img.addEventListener("mouseleave", function () {
 
 img.addEventListener("dblclick", function () {
   var change = "";
-  change = prompt("Veuillez saisir un truc");
+  change = prompt("Veuillez saisir un titre !");
   if (change !== null) {
     title.innerText = change;
+  } else {
+    title.innerHTML = "TP JavaScript";
   }
 });
 
@@ -110,24 +113,26 @@ function TabMulti(min = 1, max = 12) {
     e.preventDefault();
     let minV = document.querySelector("#min").value;
     let maxV = document.querySelector("#max").value;
-    if (
-      minV !== "" &&
-      minV !== "" &&
-      isNaN(minV) === false &&
-      isNaN(maxV) === false &&
-      minV > 0 &&
-      maxV > 0 &&
-      parseInt(minV) < parseInt(maxV)
-    ) {
-      let minA = parseInt(minV);
-      let maxA = parseInt(maxV);
-      tab.parentNode.removeChild(tab);
-      form.parentNode.removeChild(form);
-      body.removeChild(document.querySelector("#form2"));
-      TabMulti(minA, maxA);
-      pgcdCreate();
+    if (minV !== "" && minV !== "") {
+      if (isNaN(minV) === false && isNaN(maxV) === false) {
+        if (minV > 0 && maxV > 0 && parseInt(minV) < parseInt(maxV)) {
+          let minA = parseInt(minV);
+          let maxA = parseInt(maxV);
+          tab.parentNode.removeChild(tab);
+          form.parentNode.removeChild(form);
+          body.removeChild(document.querySelector("#form2"));
+          TabMulti(minA, maxA);
+          pgcdCreate();
+        } else {
+          alert(
+            "La valeur de MIN et la valeur de MAX doivent être supéreiur à zero et la valeur de MIN doit être inférieur a la valeur de MAX"
+          );
+        }
+      } else {
+        alert("La valeur de MIN et la valeur de MAX doivent être des entiers");
+      }
     } else {
-      alert("veuillez saisir la valeur de MIN ainsi que la valeur de Max");
+      alert("Veuillez saisir la valeur de MIN ainsi que la valeur de MAX");
     }
   });
 }
@@ -164,42 +169,48 @@ function pgcdCreate() {
   let inp3 = document.createElement("input");
   inp3.setAttribute("type", "text");
   inp3.setAttribute("id", "res");
+  inp3.readOnly = true;
   l3.appendChild(inp3);
   form.appendChild(l1);
   form.appendChild(l2);
-  form.appendChild(l3);
   form.appendChild(bt);
+  form.appendChild(l3);
+
   body.appendChild(form);
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let val1 = document.querySelector("#a").value;
     let val2 = document.querySelector("#b").value;
-    if (
-      val1 !== "" &&
-      val2 !== "" &&
-      isNaN(val1) === false &&
-      isNaN(val2) === false &&
-      val1 > 0 &&
-      val2 > 0
-    ) {
-      let res = document.querySelector("#res");
-      let resultat = gcd(parseInt(val1), parseInt(val2));
-      res.value = resultat;
+    if (val1 !== "" && val2 !== "") {
+      if (
+        val1 > 0 &&
+        val2 > 0 &&
+        isNaN(val1) === false &&
+        isNaN(val2) === false
+      ) {
+        let res = document.querySelector("#res");
+        let resultat = PGCD(parseInt(val1), parseInt(val2));
+        res.value = resultat;
+      } else {
+        alert(
+          "La vlaleur de A et la valeur de B doivent être un entier positif supérieur à zero"
+        );
+      }
     } else {
-      alert("veuillez saisir la valeur de MIN ainsi que la valeur de Max");
+      alert("veuillez saisir la valeur de A ainsi que la valeur de B");
     }
   });
 }
 
-function gcd(a, b) {
+function PGCD(a, b) {
   if (a > b) {
-    return gcd(b, a);
+    return PGCD(b, a);
   } else {
     if (b % a == 0) {
       return a;
     } else {
-      return gcd(a, b - a);
+      return PGCD(a, b - a);
     }
   }
 }
